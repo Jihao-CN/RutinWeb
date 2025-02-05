@@ -16,9 +16,9 @@ window.onload = function () {
 
     window.addEventListener('scroll', function () {
         if (window.pageYOffset > 0) {
-            menuContainer.style.bottom = '0';
+            menuContainer.style.top = '0';
         } else {
-            menuContainer.style.bottom = '-100px';
+            menuContainer.style.top = '-100px';
         }
     });
 };

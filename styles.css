@@ -41,14 +41,14 @@ body {
 
 .menu-container {
     position: fixed;
-    bottom: -100px;
+    top: -100px;
     left: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     padding: 15px 0;
     display: flex;
     justify-content: space-around;
-    transition: bottom 0.3s ease-in-out;
+    transition: top 0.3s ease-in-out;
     z-index: 100;
 }
 
