@@ -12,6 +12,7 @@
             background-size: cover;
             background-attachment: fixed;
             animation: blurBg 5s ease-out forwards;
+            position: relative;
         }
 
         @keyframes blurBg {
@@ -22,6 +23,12 @@
             to {
                 filter: blur(5px);
             }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            filter: blur(0px);
         }
 
         button {
@@ -59,11 +66,13 @@
 </head>
 
 <body>
-    <h1>RutinWeb</h1>
-    <div class="center">
-        <button id="ourProgramButton">俺们的程序</button>
-        <button>杂物间</button>
-        <button>社交平台&捐赠</button>
+    <div class="content">
+        <h1>RutinWeb</h1>
+        <div class="center">
+            <button id="ourProgramButton">俺们的程序</button>
+            <button>杂物间</button>
+            <button>社交平台&捐赠</button>
+        </div>
     </div>
     <script>
         document.getElementById('ourProgramButton').addEventListener('click', function () {
