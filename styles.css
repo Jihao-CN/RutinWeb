@@ -30,8 +30,6 @@ body {
     text-align: center;
     opacity: 0;
     transition: top 3s ease-in-out, opacity 3s ease-in-out;
-    /* 添加底部边框 */
-    border-bottom: 1px solid white; 
 }
 
 #title-text {
