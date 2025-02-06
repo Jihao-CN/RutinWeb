@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh - CN">
+<html lang="zh-CN">
 
 <head>
-    <meta charset="UTF - 8">
-    <meta name="viewport" content="width=device - width, initial - scale = 1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RutinWeb</title>
     <style>
         body {
@@ -11,7 +11,7 @@
             background-image: url('j.png');
             background-size: cover;
             background-attachment: fixed;
-            animation: blurBg 5s ease - out forwards;
+            animation: blurBg 5s ease-out forwards;
         }
 
         @keyframes blurBg {
@@ -39,44 +39,32 @@
             background-color: #0056b3;
         }
 
-     .center {
+       .center {
             display: flex;
-            flex - direction: column;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
         h1 {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            opacity: 0;
-            animation: slideDown 3s ease - in - out forwards;
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            z-index: 1;
         }
     </style>
 </head>
 
 <body>
+    <h1>RutinWeb</h1>
     <div class="center">
         <button id="ourProgramButton">俺们的程序</button>
         <button>杂物间</button>
         <button>社交平台&捐赠</button>
     </div>
-    <h1>RutinWeb</h1>
     <script>
         document.getElementById('ourProgramButton').addEventListener('click', function () {
             window.location.href = 'https://jihao-cn.github.io/RutinWeb/browse';
