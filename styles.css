@@ -44,7 +44,7 @@ body {
     bottom: -100px;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: white; /* 修改为白色背景 */
     padding: 15px 0;
     display: flex;
     justify-content: space-around;
@@ -52,10 +52,21 @@ body {
     z-index: 100;
 }
 
+/* 添加黑线 */
+.menu-container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
 .menu-button {
     background-color: transparent;
-    border: 2px solid white;
-    color: white;
+    border: 2px solid black; /* 修改边框颜色为黑色 */
+    color: black; /* 修改文字颜色为黑色 */
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -64,6 +75,6 @@ body {
 }
 
 .menu-button:hover {
-    background-color: white;
-    color: black;
+    background-color: black; /* 修改悬停背景色为黑色 */
+    color: white; /* 修改悬停文字颜色为白色 */
 }
