@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>动画菜单示例</title>
+    <title>RutinWeb</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="menu">
         <button class="menu-item" onclick="selectMenuItem(0)">主页</button>
-        <button class="menu-item" onclick="selectMenuItem(1)">菜单项 1</button>
+        <button class="menu-item" onclick="selectMenuItem(1)">敬请期待</button>
         <button class="menu-item" onclick="selectMenuItem(2)">俺们的项目</button>
-        <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
+        <div class="audio-control" id="audio-control" onclick="togglePlayPause('bgm')">
             <div class="inner-circle" id="inner-circle"></div>
         </div>
     </div>
@@ -27,49 +27,14 @@
                 <a href="https://www.douyin.com/user/MS4wLjABAAAAW3Vt57eOYxu7yB5c7WkSbdBVE8NbmWmZQH0EhbZ6bwsud3uHAgltwnWAvNqY7ajs">象的抖音(备选)</a>
             </div>
         </div>
-        <div id="content-1" class="content-item">这是菜单项 1 的内容</div>
+        <div id="content-1" class="content-item">敬请期待！</div>
         <div id="content-2" class="content-item">
-            <h1>新标题内容</h1>
+            <h1>项目文件夹！</h1>
             <ul id="file-list"></ul>
         </div>
     </div>
     <audio id="bgm" src="bgm.mp3"></audio>
+    <audio id="click-sound" src="s.wav"></audio>
     <script src="script.js"></script>
-    <script>
-        const username = 'Jihao-CN';
-        const repo = 'JihaoPage';
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
-
-        async function fetchFiles() {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error('网络响应失败');
-                }
-                const files = await response.json();
-                const fileList = document.getElementById('file-list');
-
-                files.forEach(file => {
-                    const listItem = document.createElement('li');
-                    const link = document.createElement('a');
-                    link.href = file.html_url;
-                    link.textContent = file.name;
-
-                    if (file.type === 'dir') {
-                        listItem.classList.add('folder');
-                    } else {
-                        listItem.classList.add('file');
-                    }
-
-                    listItem.appendChild(link);
-                    fileList.appendChild(listItem);
-                });
-            } catch (error) {
-                console.error('获取文件列表时出错:', error);
-            }
-        }
-
-        fetchFiles();
-    </script>
 </body>
 </html>
