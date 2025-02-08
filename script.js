@@ -1,6 +1,7 @@
 let selectedMenuItem = -1;
 const audio = document.getElementById('bgm');
 const audioControl = document.getElementById('audio-control');
+const clickSound = document.getElementById('click-sound');
 
 audio.volume = 0.2; // 设置默认音量
 
@@ -9,6 +10,9 @@ audio.addEventListener('ended', () => {
 });
 
 function selectMenuItem(index) {
+    // 播放点击声音
+    playClickSound();
+
     // 移除之前选中的菜单项的样式
     if (selectedMenuItem !== -1) {
         document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
@@ -30,6 +34,15 @@ function togglePlayPause() {
     } else {
         audio.pause();
         audioControl.classList.add('paused');
+    }
+}
+
+function playClickSound() {
+    if (clickSound) {
+        clickSound.currentTime = 0; // 确保每次从头开始播放
+        clickSound.play().catch(error => console.error('播放点击声音时出错:', error));
+    } else {
+        console.error('clickSound 元素未找到');
     }
 }
 
