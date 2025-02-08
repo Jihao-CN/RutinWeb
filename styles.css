@@ -51,6 +51,9 @@ body {
     color: #000;
 }
 
+a {
+            color: blue;
+}
 .content {
     flex-grow: 1;
     display: flex;
