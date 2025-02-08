@@ -34,7 +34,7 @@ function togglePlayPause() {
 }
 
 const username = 'Jihao-CN';
-const repo = 'JihaoPage';
+const repo = 'JihaoPage'; // 这里声明 repo 变量
 const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
 
 async function fetchFiles() {
