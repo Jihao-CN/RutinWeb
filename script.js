@@ -3,26 +3,22 @@ const audio = document.getElementById('bgm');
 const audioControl = document.getElementById('audio-control');
 const clickSound = document.getElementById('click-sound');
 
-audio.volume = 0.2; // 设置默认音量
+audio.volume = 0.2;
 
 audio.addEventListener('ended', () => {
     audioControl.classList.add('paused');
 });
 
 function selectMenuItem(index) {
-    // 播放点击声音
     playClickSound();
 
-    // 移除之前选中的菜单项的样式
     if (selectedMenuItem !== -1) {
         document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
         document.querySelectorAll('.content-item')[selectedMenuItem].classList.remove('active');
     }
 
-    // 更新选中的菜单项索引
     selectedMenuItem = index;
 
-    // 添加当前选中的菜单项的样式
     document.querySelectorAll('.menu-item')[index].classList.add('selected');
     document.querySelectorAll('.content-item')[index].classList.add('active');
 }
@@ -40,7 +36,7 @@ function togglePlayPause(audioId) {
 
 function playClickSound() {
     if (clickSound) {
-        clickSound.currentTime = 0; // 确保每次从头开始播放
+        clickSound.currentTime = 0;
         clickSound.play().catch(error => console.error('播放点击声音时出错:', error));
     } else {
         console.error('clickSound 元素未找到');
@@ -48,7 +44,7 @@ function playClickSound() {
 }
 
 const username = 'Jihao-CN';
-const repo = 'JihaoPage'; // 这里声明 repo 变量
+const repo = 'JihaoPage';
 const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
 
 async function fetchFiles() {

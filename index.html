@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RutinWeb</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        a {
-            color: blue;
-        }
-    </style>
 </head>
 <body>
     <div class="menu">
@@ -42,35 +36,5 @@
     <audio id="bgm" src="bgm.mp3"></audio>
     <audio id="click-sound" src="s.wav"></audio>
     <script src="script.js"></script>
-    <script>
-        async function fetchFiles() {
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error('网络响应失败');
-                }
-                const files = await response.json();
-                const fileList = document.getElementById('file-list');
-
-                files.forEach(file => {
-                    const listItem = document.createElement('li');
-                    const link = document.createElement('a');
-                    link.href = file.html_url;
-                    link.textContent = file.name;
-
-                    if (file.type === 'dir') {
-                        listItem.classList.add('folder');
-                    } else {
-                        listItem.classList.add('file');
-                    }
-
-                    listItem.appendChild(link);
-                    fileList.appendChild(listItem);
-                });
-            } catch (error) {
-                console.error('获取文件列表时出错:', error);
-            }
-        }
-    </script>
 </body>
 </html>
