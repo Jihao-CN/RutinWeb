@@ -52,7 +52,7 @@ body {
 }
 
 a {
-            color: blue;
+    color: blue;
 }
 .content {
     flex-grow: 1;
