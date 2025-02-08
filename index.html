@@ -4,7 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RutinWeb</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .menu-item.selected {
+            background-color: #0056b3;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .content-item {
+            display: none;
+        }
+        .content-item.active {
+            display: block;
+        }
+        .audio-control {
+            margin-top: 20px;
+        }
+        .audio-control .inner-circle {
+            width: 30px;
+            height: 30px;
+            background-color: #007bff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        #links a {
+            display: block;
+            margin: 5px 0;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="menu">
@@ -36,5 +91,35 @@
     <audio id="bgm" src="bgm.mp3"></audio>
     <audio id="click-sound" src="s.wav"></audio>
     <script src="script.js"></script>
+    <script>
+        async function fetchFiles() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('网络响应失败');
+                }
+                const files = await response.json();
+                const fileList = document.getElementById('file-list');
+
+                files.forEach(file => {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = file.html_url;
+                    link.textContent = file.name;
+
+                    if (file.type === 'dir') {
+                        listItem.classList.add('folder');
+                    } else {
+                        listItem.classList.add('file');
+                    }
+
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('获取文件列表时出错:', error);
+            }
+        }
+    </script>
 </body>
 </html>
