@@ -1,14 +1,69 @@
 let selectedMenuItem = -1;
+const audio = document.getElementById('bgm');
+const audioControl = document.getElementById('audio-control');
+
+audio.volume = 0.2; // 设置默认音量
+
+audio.addEventListener('ended', () => {
+    audioControl.classList.add('paused');
+});
 
 function selectMenuItem(index) {
+    // 移除之前选中的菜单项的样式
     if (selectedMenuItem !== -1) {
         document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
+        document.querySelectorAll('.content-item')[selectedMenuItem].classList.remove('active');
     }
-    selectedMenuItem = index;
-    const selectedItem = document.querySelectorAll('.menu-item')[index];
-    selectedItem.classList.add('selected');
-    document.getElementById('content-text').textContent = `您选择了菜单项 ${index + 1}`;
 
-    // 添加 macOS dock 栏打开窗口的动画效果
-    selectedItem.classList.add('dock-open');
+    // 更新选中的菜单项索引
+    selectedMenuItem = index;
+
+    // 添加当前选中的菜单项的样式
+    document.querySelectorAll('.menu-item')[index].classList.add('selected');
+    document.querySelectorAll('.content-item')[index].classList.add('active');
 }
+
+function togglePlayPause() {
+    if (audio.paused) {
+        audio.play();
+        audioControl.classList.remove('paused');
+    } else {
+        audio.pause();
+        audioControl.classList.add('paused');
+    }
+}
+
+const username = 'Jihao-CN';
+const repo = 'JihaoPage';
+const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
+
+async function fetchFiles() {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error('网络响应失败');
+        }
+        const files = await response.json();
+        const fileList = document.getElementById('file-list');
+
+        files.forEach(file => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = file.html_url;
+            link.textContent = file.name;
+
+            if (file.type === 'dir') {
+                listItem.classList.add('folder');
+            } else {
+                listItem.classList.add('file');
+            }
+
+            listItem.appendChild(link);
+            fileList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('获取文件列表时出错:', error);
+    }
+}
+
+fetchFiles();
