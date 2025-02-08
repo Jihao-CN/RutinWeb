@@ -18,24 +18,25 @@ body {
 }
 
 .menu-item {
-    background-color: #444;
-    color: white;
+    background-color: #ccc;
+    color: #000;
     border: none;
     padding: 20px;
     margin: 10px 0;
     text-align: left;
     font-size: 18px;
     cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease, padding-left 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, padding-left 0.3s ease;
 }
 
 .menu-item:hover {
-    background-color: #555;
+    background-color: #bbb;
 }
 
 .menu-item.selected {
     transform: translateX(20px);
-    background-color: #666;
+    background-color: #fff;
+    color: #000;
     padding-left: 40px;
     font-weight: bold;
 }
@@ -47,7 +48,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     font-size: 18px;
-    color: #666;
+    color: #000;
 }
 
 .content {
@@ -75,7 +76,18 @@ body {
     height: 100%;
     background: url('j.png') no-repeat center center;
     background-size: cover;
-    animation: blurImage 3s forwards;
+    position: absolute;
+    top: -100vh;
+    animation: slideIn 3s forwards, blurImage 3s 3s forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 0;
+    }
 }
 
 @keyframes blurImage {
@@ -84,6 +96,26 @@ body {
     }
     100% {
         filter: blur(8px);
+    }
+}
+
+#title {
+    position: absolute;
+    top: -100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    color: #000;
+    animation: titleSlideIn 3s 6s forwards;
+}
+
+@keyframes titleSlideIn {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 50%;
+        transform: translate(-50%, -50%);
     }
 }
 
