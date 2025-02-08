@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>芦丁网</title>
+    <title>RutinWeb</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        a {
+            color: blue;
+        }
+    </style>
 </head>
 <body>
     <div class="menu">
@@ -36,9 +42,8 @@
     <audio id="bgm" src="bgm.mp3"></audio>
     <script src="script.js"></script>
     <script>
-        const username = 'Jihao-CN';
         const repo = 'JihaoPage';
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
+        const apiUrl = `https://api.github.com/repos/Jihao-CN/${repo}/contents`;
 
         async function fetchFiles() {
             try {
