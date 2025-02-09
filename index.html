@@ -18,12 +18,11 @@
         <button class="menu-item" onclick="selectMenuItem(0)">首页</button>
         <button class="menu-item" onclick="selectMenuItem(1)">敬请期待</button>
         <button class="menu-item" onclick="selectMenuItem(2)">我们的项目</button>
-        <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
-            <div class="inner-circle" id="inner-circle"></div>
-        </div>
-        <div class="volume-control">
-            <button onclick="increaseVolume()">🔼</button>
-            <button onclick="decreaseVolume()">🔽</button>
+        <div class="audio-control-container">
+            <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
+                <div class="inner-circle" id="inner-circle"></div>
+            </div>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" oninput="adjustVolume(this.value)">
         </div>
     </div>
     <div class="content">
