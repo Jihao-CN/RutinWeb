@@ -27,13 +27,12 @@ function selectMenuItem(index) {
     document.querySelectorAll('.content-item')[index].classList.add('active');
 }
 
-function togglePlayPause(audioId) {
-    const audioElement = document.getElementById(audioId);
-    if (audioElement.paused) {
-        audioElement.play();
+function togglePlayPause() {
+    if (audio.paused) {
+        audio.play();
         audioControl.classList.remove('paused');
     } else {
-        audioElement.pause();
+        audio.pause();
         audioControl.classList.add('paused');
     }
 }
