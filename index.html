@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,9 +40,11 @@
         </div>
     </div>
     <audio id="bgm" src="bgm.mp3"></audio>
-    <audio id="click-sound" src="s.wav"></audio>
     <script src="script.js"></script>
     <script>
+        // 删除重复的 apiUrl 变量声明
+        // const apiUrl = `https://api.github.com/repos/Jihao-CN/JihaoPage/contents`;
+
         async function fetchFiles() {
             try {
                 const response = await fetch(apiUrl);
