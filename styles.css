@@ -125,7 +125,7 @@ body {
     right: 20px;
     display: flex;
     flex-direction: column;
-    animation: linksSlideIn 3s 6s forwards;
+    animation: linksSlideIn 2.5s 1s forwards;
 }
 
 #links a {
