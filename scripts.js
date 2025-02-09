@@ -1,11 +1,62 @@
-function togglePlayPause() {
-    var audio = document.getElementById('bgm');
-    if (audio.paused) {
-        audio.play();
+let selectedMenuItem = -1;
+const audio = document.getElementById('bgm');
+const audioControl = document.getElementById('audio-control');
+const optionSound = document.getElementById('option-sound');
+
+audio.volume = 0.2; // 设置默认音量
+
+audio.addEventListener('ended', () => {
+    audioControl.classList.add('paused');
+});
+
+function selectMenuItem(index) {
+    // 移除之前选中的菜单项的样式
+    if (selectedMenuItem !== -1) {
+        document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
+        document.querySelectorAll('.content-item')[selectedMenuItem].classList.remove('active');
+    }
+
+    // 更新选中的菜单项索引
+    selectedMenuItem = index;
+
+    // 添加当前选中的菜单项的样式
+    document.querySelectorAll('.menu-item')[index].classList.add('selected');
+    document.querySelectorAll('.content-item')[index].classList.add('active');
+
+    // 播放选项选中的音效
+    if (optionSound) {
+        optionSound.currentTime = 0; // 确保从头开始播放
+        optionSound.play();
     } else {
-        audio.pause();
+        console.error('option-sound 元素未找到');
     }
 }
+
+function togglePlayPause() {
+    if (audio.paused) {
+        audio.play();
+        audioControl.classList.remove('paused');
+    } else {
+        audio.pause();
+        audioControl.classList.add('paused');
+    }
+}
+
+function increaseVolume() {
+    if (audio.volume < 1) {
+        audio.volume = Math.min(1, audio.volume + 0.1);
+    }
+}
+
+function decreaseVolume() {
+    if (audio.volume > 0) {
+        audio.volume = Math.max(0, audio.volume - 0.1);
+    }
+}
+
+const username = 'Jihao-CN';
+const repo = 'JihaoPage'; // 这里声明 repo 变量
+const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
 
 async function fetchFiles() {
     try {
@@ -35,3 +86,5 @@ async function fetchFiles() {
         console.error('获取文件列表时出错:', error);
     }
 }
+
+fetchFiles();

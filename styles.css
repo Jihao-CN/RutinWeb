@@ -172,3 +172,23 @@ body {
     background-color: #000;
     border-radius: 50%;
 }
+
+.volume-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.volume-control button {
+    background-color: #ccc;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin: 2px;
+}
+
+.volume-control button:hover {
+    background-color: #bbb;
+}

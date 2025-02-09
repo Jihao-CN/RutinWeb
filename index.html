@@ -21,6 +21,10 @@
         <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
             <div class="inner-circle" id="inner-circle"></div>
         </div>
+        <div class="volume-control">
+            <button onclick="increaseVolume()">🔼</button>
+            <button onclick="decreaseVolume()">🔽</button>
+        </div>
     </div>
     <div class="content">
         <div id="home-content" class="content-item">
@@ -75,6 +79,8 @@
                 console.error('获取文件列表时出错:', error);
             }
         }
+
+        fetchFiles();
     </script>
 </body>
 
