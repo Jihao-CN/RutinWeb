@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +11,6 @@
         <button class="menu-item" onclick="selectMenuItem(0)">主页</button>
         <button class="menu-item" onclick="selectMenuItem(1)">敬请期待</button>
         <button class="menu-item" onclick="selectMenuItem(2)">俺们的项目</button>
-        <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
-            <div class="inner-circle" id="inner-circle"></div>
-        </div>
     </div>
     <div class="content">
         <div id="home-content" class="content-item">
@@ -34,6 +30,10 @@
             <ul id="file-list"></ul>
         </div>
     </div>
+    <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
+        <img src="cover.jpg" class="cover" id="cover">
+    </div>
+    <div class="status-message" id="status-message"></div>
     <audio id="bgm" src="bgm.mp3"></audio>
     <audio id="option-sound" src="s.wav"></audio>
     <script src="script.js"></script>
