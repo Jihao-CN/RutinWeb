@@ -40,7 +40,7 @@ function togglePlayPause() {
         audio.play();
         audioControl.classList.add('playing');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放不知名音乐');
+        showPlaybackStatus('正在播放《town》-remix <br /> Microsoft Windows');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
