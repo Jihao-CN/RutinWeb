@@ -24,8 +24,12 @@ function selectMenuItem(index) {
     document.querySelectorAll('.content-item')[index].classList.add('active');
 
     // 播放选项选中的音效
-    optionSound.currentTime = 0; // 确保从头开始播放
-    optionSound.play();
+    if (optionSound) {
+        optionSound.currentTime = 0; // 确保从头开始播放
+        optionSound.play();
+    } else {
+        console.error('option-sound 元素未找到');
+    }
 }
 
 function togglePlayPause() {
