@@ -106,7 +106,7 @@ body {
     transform: translateX(-50%);
     font-size: 48px;
     color: #000;
-    animation: titleSlideIn 1s 2s forwards;
+    animation: titleSlideIn 3s 2s forwards;
 }
 
 @keyframes titleSlideIn {
