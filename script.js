@@ -1,6 +1,7 @@
 let selectedMenuItem = -1;
 const audio = document.getElementById('bgm');
 const audioControl = document.getElementById('audio-control');
+const optionSound = document.getElementById('option-sound');
 
 audio.volume = 0.2; // 设置默认音量
 
@@ -21,6 +22,10 @@ function selectMenuItem(index) {
     // 添加当前选中的菜单项的样式
     document.querySelectorAll('.menu-item')[index].classList.add('selected');
     document.querySelectorAll('.content-item')[index].classList.add('active');
+
+    // 播放选项选中的音效
+    optionSound.currentTime = 0; // 确保从头开始播放
+    optionSound.play();
 }
 
 function togglePlayPause() {
