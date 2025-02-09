@@ -1,12 +1,15 @@
 let selectedMenuItem = -1;
 const audio = document.getElementById('bgm');
 const audioControl = document.getElementById('audio-control');
+const playbackStatus = document.getElementById('playback-status');
 const optionSound = document.getElementById('option-sound');
+let rotation = 0;
 
 audio.volume = 0.2; // 设置默认音量
 
 audio.addEventListener('ended', () => {
-    audioControl.classList.add('paused');
+    audioControl.classList.remove('playing');
+    showPlaybackStatus('已暂停');
 });
 
 function selectMenuItem(index) {
@@ -35,15 +38,27 @@ function selectMenuItem(index) {
 function togglePlayPause() {
     if (audio.paused) {
         audio.play();
-        audioControl.classList.remove('paused');
+        audioControl.classList.add('playing');
+        audioControl.style.animationPlayState = 'running';
+        showPlaybackStatus('正在播放不知名音乐');
     } else {
         audio.pause();
-        audioControl.classList.add('paused');
+        audioControl.classList.remove('playing');
+        audioControl.style.animationPlayState = 'paused';
+        showPlaybackStatus('已暂停');
     }
 }
 
 function adjustVolume(value) {
     audio.volume = value;
+}
+
+function showPlaybackStatus(message) {
+    playbackStatus.textContent = message;
+    playbackStatus.classList.add('show');
+    setTimeout(() => {
+        playbackStatus.classList.remove('show');
+    }, 2000); // 显示 2 秒后隐藏
 }
 
 const username = 'Jihao-CN';
@@ -61,16 +76,22 @@ async function fetchFiles() {
 
         files.forEach(file => {
             const listItem = document.createElement('li');
+            listItem.classList.add('file-list-item');
+            
+            const icon = document.createElement('img');
+            if (file.type === 'dir') {
+                icon.src = 'folder.jpg';
+                listItem.classList.add('folder');
+            } else {
+                icon.src = 'file.jpg';
+                listItem.classList.add('file');
+            }
+            
             const link = document.createElement('a');
             link.href = file.html_url;
             link.textContent = file.name;
-
-            if (file.type === 'dir') {
-                listItem.classList.add('folder');
-            } else {
-                listItem.classList.add('file');
-            }
-
+            
+            listItem.appendChild(icon);
             listItem.appendChild(link);
             fileList.appendChild(listItem);
         });

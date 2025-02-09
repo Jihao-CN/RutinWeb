@@ -25,6 +25,7 @@ body {
     background-color: #333;
     padding: 10px;
     transition: transform 0.3s ease;
+    position: relative;
 }
 
 .menu-item {
@@ -157,6 +158,7 @@ body {
     display: flex;
     align-items: center;
     margin-top: 10px;
+    position: relative;
 }
 
 .audio-control {
@@ -170,16 +172,58 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    animation: rotate 0s linear infinite;
+}
+
+.audio-control.playing {
+    animation: rotate 2s linear infinite;
+    animation-play-state: paused;
 }
 
 .inner-circle {
-    width: 30px;
-    height: 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 20px;
+    height: 20px;
+    background-color: #000;
     border-radius: 50%;
 }
 
 #volume-slider {
     margin-left: 10px;
     width: 100px;
+}
+
+.playback-status {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    position: absolute;
+    left: -300px;
+    bottom: -30px;
+    transition: transform 1s ease, opacity 1s ease;
+    white-space: nowrap;
+}
+
+.playback-status.show {
+    opacity: 1;
+    transform: translateX(300px); /* 提示文本从左侧弹出 */
+}
+
+.file-list-item {
+    display: flex;
+    align-items: center;
+}
+
+.file-list-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
