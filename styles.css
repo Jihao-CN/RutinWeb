@@ -10,7 +10,6 @@ body {
 }
 
 body {
-    font-family: Arial, sans-serif;
     display: flex;
     height: 100vh;
     margin: 0;
@@ -117,7 +116,7 @@ body {
     transform: translateX(-50%);
     font-size: 48px;
     color: #000;
-    animation: titleSlideIn 4s 2s forwards;
+    animation: titleSlideIn 3s 6s forwards;
 }
 
 @keyframes titleSlideIn {
@@ -136,7 +135,7 @@ body {
     right: 20px;
     display: flex;
     flex-direction: column;
-    animation: linksSlideIn 2s 1s forwards;
+    animation: linksSlideIn 3s 6s forwards;
 }
 
 #links a {
@@ -157,40 +156,5 @@ body {
 .audio-control {
     margin-top: auto;
     width: 60px;
-    height: 60px;
-    border: 2px solid green;
-    border-radius: 50%;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
 }
-
-.audio-control.paused {
-    border-color: blue;
-}
-
-.inner-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: white;
-}
-
-.folder {
-    background-image: url('folder.jpg');
-}
-
-.file {
-    background-image: url('file.jpg');
-}
-
-.folder,
-.file {
-    background-repeat: no-repeat;
-    background-size: 20px 20px;
-    padding-left: 30px;
-    line-height: 20px;
-}
+``` ▋
