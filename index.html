@@ -12,11 +12,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="menu">
-        <button class="menu-item" onclick="selectMenuItem(0)">主页</button>
+        <button class="menu-item" onclick="selectMenuItem(0)">首页</button>
         <button class="menu-item" onclick="selectMenuItem(1)">敬请期待</button>
-        <button class="menu-item" onclick="selectMenuItem(2)">俺们的项目</button>
+        <button class="menu-item" onclick="selectMenuItem(2)">我们的项目</button>
         <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
             <div class="inner-circle" id="inner-circle"></div>
         </div>
@@ -41,7 +42,7 @@
     </div>
     <audio id="bgm" src="bgm.mp3"></audio>
     <audio id="option-sound" src="s.wav"></audio>
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
     <script>
         // 删除重复的 apiUrl 变量声明
         // const apiUrl = `https://api.github.com/repos/Jihao-CN/JihaoPage/contents`;
@@ -76,4 +77,5 @@
         }
     </script>
 </body>
+
 </html>

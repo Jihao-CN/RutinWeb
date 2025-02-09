@@ -156,5 +156,19 @@ body {
 .audio-control {
     margin-top: auto;
     width: 60px;
+    height: 60px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
-``` ▋
+
+.inner-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #000;
+    border-radius: 50%;
+}
