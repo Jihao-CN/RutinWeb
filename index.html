@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RutinWeb</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        a {
-            color: blue;
-        }
-    </style>
 </head>
 <body>
     <div class="menu">
@@ -43,10 +38,8 @@
     <audio id="option-sound" src="s.wav"></audio>
     <script src="script.js"></script>
     <script>
-        // 删除重复的 apiUrl 变量声明
-        // const apiUrl = `https://api.github.com/repos/Jihao-CN/JihaoPage/contents`;
-
         async function fetchFiles() {
+            const apiUrl = 'https://api.github.com/repos/Jihao-CN/RutinWeb/contents';
             try {
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
