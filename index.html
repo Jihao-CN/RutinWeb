@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,13 +11,12 @@
         }
     </style>
 </head>
-
 <body>
     <div class="menu">
         <button class="menu-item" onclick="selectMenuItem(0)">主页</button>
         <button class="menu-item" onclick="selectMenuItem(1)">敬请期待</button>
         <button class="menu-item" onclick="selectMenuItem(2)">俺们的项目</button>
-        <div class="audio-control" id="audio-control" onclick="togglePlayPause('bgm')">
+        <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
             <div class="inner-circle" id="inner-circle"></div>
         </div>
     </div>
@@ -72,9 +70,6 @@
                 console.error('获取文件列表时出错:', error);
             }
         }
-
-        fetchFiles();
     </script>
 </body>
-
 </html>
