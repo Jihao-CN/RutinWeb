@@ -40,7 +40,7 @@ function togglePlayPause() {
         audio.play();
         audioControl.classList.add('playing');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放《town》Microsoft Windows');
+        showPlaybackStatus('正在播放赶绵羊');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
