@@ -7,11 +7,14 @@ let rotation = 0;
 
 audio.volume = 0.2; // 设置默认音量
 
+// 音频播放结束事件处理
 audio.addEventListener('ended', () => {
     audioControl.classList.remove('playing');
+    audioControl.classList.add('paused');
     showPlaybackStatus('已暂停');
 });
 
+// 选择菜单项的函数
 function selectMenuItem(index) {
     // 移除之前选中的菜单项的样式
     if (selectedMenuItem !== -1) {
@@ -35,24 +38,29 @@ function selectMenuItem(index) {
     }
 }
 
+// 切换播放/暂停的函数
 function togglePlayPause() {
     if (audio.paused) {
         audio.play();
         audioControl.classList.add('playing');
+        audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
         showPlaybackStatus('正在播放三角度');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
+        audioControl.classList.add('paused');
         audioControl.style.animationPlayState = 'paused';
         showPlaybackStatus('已暂停');
     }
 }
 
+// 调整音量的函数
 function adjustVolume(value) {
     audio.volume = value;
 }
 
+// 显示播放状态的函数
 function showPlaybackStatus(message) {
     playbackStatus.textContent = message;
     playbackStatus.classList.add('show');
@@ -60,44 +68,3 @@ function showPlaybackStatus(message) {
         playbackStatus.classList.remove('show');
     }, 2000); // 显示 2 秒后隐藏
 }
-
-const username = 'Jihao-CN';
-const repo = 'JihaoPage'; // 这里声明 repo 变量
-const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents`;
-
-async function fetchFiles() {
-    try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error('网络响应失败');
-        }
-        const files = await response.json();
-        const fileList = document.getElementById('file-list');
-
-        files.forEach(file => {
-            const listItem = document.createElement('li');
-            listItem.classList.add('file-list-item');
-            
-            const icon = document.createElement('img');
-            if (file.type === 'dir') {
-                icon.src = 'folder.jpg';
-                listItem.classList.add('folder');
-            } else {
-                icon.src = 'file.jpg';
-                listItem.classList.add('file');
-            }
-            
-            const link = document.createElement('a');
-            link.href = file.html_url;
-            link.textContent = file.name;
-            
-            listItem.appendChild(icon);
-            listItem.appendChild(link);
-            fileList.appendChild(listItem);
-        });
-    } catch (error) {
-        console.error('获取文件列表时出错:', error);
-    }
-}
-
-fetchFiles();
