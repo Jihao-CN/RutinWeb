@@ -1,70 +1,27 @@
-let selectedMenuItem = -1;
-const audio = document.getElementById('bgm');
-const audioControl = document.getElementById('audio-control');
-const playbackStatus = document.getElementById('playback-status');
-const optionSound = document.getElementById('option-sound');
-let rotation = 0;
+document.addEventListener("DOMContentLoaded", function() {
+    const menuItems = document.querySelectorAll(".menu-item");
+    const contentItems = document.querySelectorAll(".content-item");
 
-audio.volume = 0.2; // 设置默认音量
+    function selectMenuItem(index) {
+        // 移除所有内容项的活动状态
+        contentItems.forEach(item => {
+            item.classList.remove("active");
+        });
 
-// 音频播放结束事件处理
-audio.addEventListener('ended', () => {
-    audioControl.classList.remove('playing');
-    audioControl.classList.add('paused');
-    showPlaybackStatus('已暂停');
+        // 给选中的内容项添加活动状态
+        const selectedItem = contentItems[index];
+        if (selectedItem) {
+            selectedItem.classList.add("active");
+        } else {
+            console.error("No content item found for index:", index);
+        }
+    }
+
+    // 设置初始活动内容项
+    selectMenuItem(0);
+
+    // 添加菜单项点击事件监听器
+    menuItems.forEach((item, index) => {
+        item.addEventListener("click", () => selectMenuItem(index));
+    });
 });
-
-// 选择菜单项的函数
-function selectMenuItem(index) {
-    // 移除之前选中的菜单项的样式
-    if (selectedMenuItem !== -1) {
-        document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
-        document.querySelectorAll('.content-item')[selectedMenuItem].classList.remove('active');
-    }
-
-    // 更新选中的菜单项索引
-    selectedMenuItem = index;
-
-    // 添加当前选中的菜单项的样式
-    document.querySelectorAll('.menu-item')[index].classList.add('selected');
-    document.querySelectorAll('.content-item')[index].classList.add('active');
-
-    // 播放选项选中的音效
-    if (optionSound) {
-        optionSound.currentTime = 0; // 确保从头开始播放
-        optionSound.play();
-    } else {
-        console.error('option-sound 元素未找到');
-    }
-}
-
-// 切换播放/暂停的函数
-function togglePlayPause() {
-    if (audio.paused) {
-        audio.play();
-        audioControl.classList.add('playing');
-        audioControl.classList.remove('paused');
-        audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放三角度');
-    } else {
-        audio.pause();
-        audioControl.classList.remove('playing');
-        audioControl.classList.add('paused');
-        audioControl.style.animationPlayState = 'paused';
-        showPlaybackStatus('已暂停');
-    }
-}
-
-// 调整音量的函数
-function adjustVolume(value) {
-    audio.volume = value;
-}
-
-// 显示播放状态的函数
-function showPlaybackStatus(message) {
-    playbackStatus.textContent = message;
-    playbackStatus.classList.add('show');
-    setTimeout(() => {
-        playbackStatus.classList.remove('show');
-    }, 2000); // 显示 2 秒后隐藏
-}
