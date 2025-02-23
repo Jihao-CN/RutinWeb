@@ -1,44 +1,78 @@
+@font-face {
+    font-family: 'MiSans';
+    src: url('misans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: 'MiSans', Arial, sans-serif;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    transition: background-color 2s ease;
 }
 
 .menu {
     display: flex;
-    justify-content: center;
-    width: 100%;
-    background-color: #2c3e50;
-    padding: 10px 0;
+    flex-direction: column;
+    width: 200px;
+    background-color: #333;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    position: relative;
 }
 
 .menu-item {
-    margin: 0 15px;
-    background-color: #34495e;
+    background-color: #ccc;
+    color: #000;
     border: none;
-    color: white;
-    padding: 10px 20px;
+    padding: 20px;
+    margin: 10px 0;
+    text-align: left;
+    font-size: 18px;
     cursor: pointer;
-    font-size: 16px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, padding-left 0.3s ease;
 }
 
 .menu-item:hover {
-    background-color: #1abc9c;
+    background-color: #bbb;
+}
+
+.menu-item.selected {
+    transform: translateX(20px);
+    background-color: #fff;
+    color: #000;
+    padding-left: 40px;
+    font-weight: bold;
+}
+
+.menu-item.selected::after {
+    content: '▶';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #000;
 }
 
 .content {
-    width: 100%;
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
 }
 
 .content-item {
-    width: 100%;
     display: none;
+    width: 100%;
+    height: 100%;
 }
 
 .content-item.active {
@@ -47,48 +81,156 @@ body {
 
 #background-image {
     width: 100%;
-    height: 300px;
+    height: 100%;
     background: url('j.png') no-repeat center center;
     background-size: cover;
+    position: absolute;
+    top: -100vh;
+    animation: slideIn 3s forwards, blurImage 3s 3s forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes blurImage {
+    0% {
+        filter: blur(0);
+    }
+    100% {
+        filter: blur(8px);
+    }
 }
 
 #title {
+    position: absolute;
+    top: -100vh;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 48px;
-    color: #2c3e50;
-    margin: 20px 0;
-    text-align: center; /* 确保标题居中 */
+    color: #000;
+    animation: titleSlideIn 3s 6s forwards;
 }
 
-.vertical-links {
+@keyframes titleSlideIn {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#links {
+    position: absolute;
+    bottom: -100vh;
+    right: 20px;
     display: flex;
     flex-direction: column;
+    animation: linksSlideIn 3s 6s forwards;
+}
+
+#links a {
+    color: #000;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+@keyframes linksSlideIn {
+    0% {
+        bottom: -100vh;
+    }
+    100% {
+        bottom: 20px;
+    }
+}
+
+.audio-control-container {
+    display: flex;
     align-items: center;
+    margin-top: 10px;
+    position: relative;
+}
+
+.audio-control {
+    width: 60px;
+    height: 60px;
+    background-image: url('cover.jpg');
+    background-size: cover;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    animation: rotate 0s linear infinite;
+}
+
+.audio-control.playing {
+    animation: rotate 2s linear infinite;
+    animation-play-state: paused;
+}
+
+.inner-circle {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+#volume-slider {
+    margin-left: 10px;
+    width: 100px;
+}
+
+.playback-status {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    position: absolute;
+    left: -300px;
+    bottom: -30px;
+    transition: transform 1s ease, opacity 1s ease;
+    white-space: nowrap;
+}
+
+.playback-status.show {
+    opacity: 1;
+    transform: translateX(300px); /* 提示文本从左侧弹出 */
+}
+
+.file-list-item {
+    display: flex;
+    align-items: center;
+}
+
+.file-list-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .vertical-links a {
-    color: #1abc9c;
-    text-decoration: none;
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-.vertical-links a:hover {
-    color: #16a085;
-}
-
-.version-switch {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    margin-bottom: 10px; /* 可选：添加一些间距 */
 }
 
 .version-switch a {
-    color: #1abc9c;
-    text-decoration: none;
-    margin: 10px 0;
-    font-size: 16px;
-}
-
-.version-switch a:hover {
-    color: #16a085;
+    display: block;
+    margin-bottom: 10px; /* 可选：添加一些间距 */
 }
