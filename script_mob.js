@@ -1,4 +1,7 @@
-document.addEventListener("DOMContentLoaded", function() {
+// 在script_mob.js文件开头定义全局音频对象
+let optionSound;
+document.addEventListener("DOMContentLoaded", function () {
+    optionSound = new Audio('s.wav');
     const menuItems = document.querySelectorAll(".menu-item");
     const contentItems = document.querySelectorAll(".content-item");
     const loadButton = document.getElementById('load-button');
@@ -7,10 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const urlFrame = document.getElementById('url-frame');
 
     function selectMenuItem(index) {
-        const audio = new Audio('s.wav');
-        audio.play().catch(error => {
-            console.error('Audio play failed: ', error);
-        });
+        if (optionSound.paused) {
+            optionSound.currentTime = 0;
+            optionSound.play().catch(error => {
+                console.error('Audio play failed: ', error);
+            });
+        }
         contentItems.forEach(item => {
             item.classList.remove("active");
         });
@@ -31,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('menu-item-0').onclick = () => selectMenuItem(0);
     document.getElementById('menu-item-1').onclick = () => selectMenuItem(1);
     document.getElementById('menu-item-2').onclick = () => selectMenuItem(2);
-    document.getElementById('menu-item-3').onclick = () => selectMenuItem(3);
 
     loadButton.addEventListener('click', () => {
         const url = urlInput.value;
