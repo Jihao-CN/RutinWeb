@@ -35,7 +35,7 @@ function togglePlayPause() {
         audioControl.classList.add('playing');
         audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放三角度');
+        showPlaybackStatus('正在播放厕所故事');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
