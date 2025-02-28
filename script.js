@@ -73,3 +73,46 @@ document.addEventListener("DOMContentLoaded", function () {
         urlFrame.src = urlFrame.src;
     });
 });
+
+// 隐藏iframe并加载新页面
+document.getElementById('load-button').addEventListener('click', function() {
+    const iframe = document.getElementById('url-frame');
+    iframe.style.visibility = 'hidden';  // 加载新页面时再次隐藏
+    iframe.src = document.getElementById('url-input').value;
+});
+
+// 在原有加载按钮事件处理中增加：
+document.getElementById('load-button').addEventListener('click', function() {
+    const iframe = document.getElementById('url-frame');
+    const progress = document.getElementById('loading-progress');
+    const errorDiv = document.getElementById('error-code');
+    
+    // 重置状态
+    errorDiv.style.display = 'none';
+    progress.style.display = 'block';
+    iframe.style.visibility = 'hidden';
+    progress.value = 30; // 模拟初始进度
+    
+    // 设置超时检测
+    let timeout = setTimeout(() => {
+        errorDiv.textContent = 'ERR_CONNECTION_TIMEOUT (代码: 504)';
+        errorDiv.style.display = 'block';
+        progress.style.display = 'none';
+    }, 10000);
+
+    iframe.onload = function() {
+        clearTimeout(timeout);
+        progress.value = 100;
+        setTimeout(() => progress.style.display = 'none', 300);
+        iframe.style.visibility = 'visible';
+    };
+
+    iframe.onerror = function() {
+        clearTimeout(timeout);
+        errorDiv.textContent = 'ERR_CONNECTION_REFUSED (代码: 403)';
+        errorDiv.style.display = 'block';
+        progress.style.display = 'none';
+    };
+    
+    iframe.src = document.getElementById('url-input').value;
+});

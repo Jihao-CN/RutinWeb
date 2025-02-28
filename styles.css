@@ -234,3 +234,17 @@ body {
     display: block;
     margin-bottom: 10px; /* 可选：添加一些间距 */
 }
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+#url-input {
+    flex: 1;
+    padding: 8px;
+    max-width: 150px; /* 新增宽度限制 */
+    max-height: 6px; /* 新增高度限制 */;
+    transition: width 0.3s ease; /* 添加过渡动画 */
+}
