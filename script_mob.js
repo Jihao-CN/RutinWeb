@@ -1,48 +1,56 @@
-// 在script_mob.js文件开头定义全局音频对象
-let optionSound;
-document.addEventListener("DOMContentLoaded", function () {
-    optionSound = new Audio('s.wav');
-    const menuItems = document.querySelectorAll(".menu-item");
-    const contentItems = document.querySelectorAll(".content-item");
-    const loadButton = document.getElementById('load-button');
-    const refreshButton = document.getElementById('refresh-button');
-    const urlInput = document.getElementById('url-input');
-    const urlFrame = document.getElementById('url-frame');
+let selectedMenuItem = -1;
+const optionSound = document.getElementById('option-sound');
 
-    function selectMenuItem(index) {
-        if (optionSound.paused) {
-            optionSound.currentTime = 0;
-            optionSound.play().catch(error => {
-                console.error('Audio play failed: ', error);
-            });
-        }
-        contentItems.forEach(item => {
-            item.classList.remove("active");
-        });
-        const selectedItem = contentItems[index];
-        if (selectedItem) {
-            selectedItem.classList.add("active");
-        } else {
-            console.error("No content item found for index:", index);
-        }
+function selectMenuItem(index) {
+    if (selectedMenuItem!== -1) {
+        document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
+        document.querySelectorAll('.content-item')[selectedMenuItem].classList.remove('active');
     }
+    selectedMenuItem = index;
+    document.querySelectorAll('.menu-item')[index].classList.add('selected');
+    document.querySelectorAll('.content-item')[index].classList.add('active');
+    if (optionSound) {
+        optionSound.currentTime = 0;
+        optionSound.play();
+    }
+}
 
-    selectMenuItem(0);
+document.addEventListener("DOMContentLoaded", function () {
+    const loadButton = document.getElementById('load-button');
+    const backButton = document.getElementById('back-button');
+    const urlFrame = document.getElementById('url-frame');
+    const progress = document.getElementById('loading-progress');
+    const errorDiv = document.getElementById('error-code');
 
-    menuItems.forEach((item, index) => {
-        item.addEventListener("click", () => selectMenuItem(index));
-    });
-
-    document.getElementById('menu-item-0').onclick = () => selectMenuItem(0);
-    document.getElementById('menu-item-1').onclick = () => selectMenuItem(1);
-    document.getElementById('menu-item-2').onclick = () => selectMenuItem(2);
-
+    // 按钮功能
     loadButton.addEventListener('click', () => {
-        const url = urlInput.value;
-        urlFrame.src = url;
+        errorDiv.style.display = 'none';
+        progress.style.display = 'block';
+        progress.value = 30;
+
+        let timeout = setTimeout(() => {
+            errorDiv.textContent = 'ERR_CONNECTION_TIMEOUT (代码: 504)';
+            errorDiv.style.display = 'block';
+            progress.style.display = 'none';
+        }, 10000);
+
+        urlFrame.onload = function() {
+            clearTimeout(timeout);
+            progress.value = 100;
+            setTimeout(() => progress.style.display = 'none', 300);
+        };
+
+        urlFrame.onerror = function() {
+            clearTimeout(timeout);
+            errorDiv.textContent = 'ERR_CONNECTION_REFUSED (代码: 403)';
+            errorDiv.style.display = 'block';
+            progress.style.display = 'none';
+        };
+        
+        urlFrame.src = urlFrame.src; // 简单刷新
     });
 
-    refreshButton.addEventListener('click', () => {
+    backButton.addEventListener('click', function() {
         urlFrame.src = urlFrame.src;
     });
 });

@@ -1,30 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RutinWeb</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .menu-item-clone {
-            position: fixed;
-            pointer-events: none;
-            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 999;
-        }
-    </style>
+    <title>RutinWeb Mobile</title>
+    <link rel="stylesheet" href="styles_mob.css">
 </head>
+
 <body>
     <div class="menu">
-        <button class="menu-item" onclick="cloneAndAnimate(event, 0)">首页</button>
-        <button class="menu-item" onclick="cloneAndAnimate(event, 1)">表白网站浏览</button>
-        <button class="menu-item" onclick="cloneAndAnimate(event, 2)">版本切换</button>
-        <div class="audio-control-container">
-            <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
-                <div class="inner-circle" id="inner-circle"></div>
-            </div>
-            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" oninput="adjustVolume(this.value)">
-            <div class="playback-status" id="playback-status">正在播放音乐</div>
+        <button class="menu-item" onclick="selectMenuItem(0)">首页</button>
+        <button class="menu-item" onclick="selectMenuItem(1)">网页</button>
+        <button class="menu-item" onclick="selectMenuItem(2)">切换</button>
         </div>
     </div>
     <div class="content">
@@ -49,8 +37,10 @@
             </div>
             <iframe id="url-frame" 
                     src="https://jihao-cn.github.io/EmbedShare/"
-                    style="width: 100%; height: 100vh; border: none; visibility: hidden;"
-                    onload="this.style.visibility = 'visible';"></iframe>
+                    style="width: 100%; height: 100%; border: none;visibility: hidden"
+                    onload="this.style.visibility = 'visible'; adjustIframeHeight(this)"
+                    sandbox="allow-scripts allow-same-origin">
+            </iframe>
         </div>
         <div id="content-2" class="content-item">
             <div class="version-switch">
@@ -59,8 +49,8 @@
             </div>
         </div>
     </div>
-    <audio id="bgm" src="https://api.injahow.cn/meting/?type=url&id=2005478816"></audio>
     <audio id="option-sound" src="s.wav"></audio>
-    <script src="script.js"></script>
+    <script src="script_mob.js"></script>
 </body>
+
 </html>

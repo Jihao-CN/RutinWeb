@@ -7,12 +7,36 @@ let rotation = 0;
 
 audio.volume = 0.5;
 
-audio.addEventListener('ended', () => {
-    audioControl.classList.remove('playing');
-    audioControl.classList.add('paused');
-    showPlaybackStatus('已暂停');
-});
+// 新增动画函数
+function cloneAndAnimate(event, index) {
+    const btn = event.target;
+    const clone = btn.cloneNode(true);
+    
+    const rect = btn.getBoundingClientRect();
+    const centerX = window.innerWidth/2 - rect.width/2;
+    const centerY = window.innerHeight/2 - rect.height/2;
+    
+    clone.style.position = 'fixed';
+    clone.style.left = `${rect.left}px`;
+    clone.style.top = `${rect.top}px`;
+    clone.className = 'menu-item-clone';
+    
+    document.body.appendChild(clone);
 
+    setTimeout(() => {
+        clone.style.transform = `translate(${centerX - rect.left}px, ${centerY - rect.top}px) scale(3)`;
+        clone.style.filter = 'blur(10px)';
+        clone.style.opacity = '0';
+    }, 10);
+
+    setTimeout(() => {
+        clone.remove();
+        selectMenuItem(index);
+        document.getElementById('option-sound').play();
+    }, 800);
+}
+
+// 原菜单切换函数
 function selectMenuItem(index) {
     if (selectedMenuItem!== -1) {
         document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
@@ -24,11 +48,10 @@ function selectMenuItem(index) {
     if (optionSound) {
         optionSound.currentTime = 0;
         optionSound.play();
-    } else {
-        console.error('option-sound元素未找到');
     }
 }
 
+// 音频控制相关函数
 function togglePlayPause() {
     if (audio.paused) {
         audio.play();
@@ -57,6 +80,7 @@ function showPlaybackStatus(message) {
     }, 2000);
 }
 
+// 页面加载相关逻辑
 document.addEventListener("DOMContentLoaded", function () {
     const loadButton = document.getElementById('load-button');
     const backButton = document.getElementById('back-button');
@@ -64,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const progress = document.getElementById('loading-progress');
     const errorDiv = document.getElementById('error-code');
 
-    // 开始按钮功能
     loadButton.addEventListener('click', () => {
         errorDiv.style.display = 'none';
         progress.style.display = 'block';
@@ -94,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
         urlFrame.src = 'https://jihao-cn.github.io/EmbedShare/';
     });
 
-    // 后撤步功能 (直接重新加载)
     backButton.addEventListener('click', function() {
         urlFrame.src = 'https://jihao-cn.github.io/EmbedShare/';
     });
