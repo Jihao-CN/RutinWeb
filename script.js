@@ -5,7 +5,7 @@ const playbackStatus = document.getElementById('playback-status');
 const optionSound = document.getElementById('option-sound');
 let rotation = 0;
 
-audio.volume = 0.2;
+audio.volume = 0.5;
 
 audio.addEventListener('ended', () => {
     audioControl.classList.remove('playing');
@@ -35,7 +35,7 @@ function togglePlayPause() {
         audioControl.classList.add('playing');
         audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放厕所故事');
+        showPlaybackStatus('正在播放光遇联动音乐');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
@@ -57,62 +57,45 @@ function showPlaybackStatus(message) {
     }, 2000);
 }
 
-// 添加加载和刷新功能
 document.addEventListener("DOMContentLoaded", function () {
     const loadButton = document.getElementById('load-button');
-    const refreshButton = document.getElementById('refresh-button');
-    const urlInput = document.getElementById('url-input');
+    const backButton = document.getElementById('back-button');
     const urlFrame = document.getElementById('url-frame');
-
-    loadButton.addEventListener('click', () => {
-        const url = urlInput.value;
-        urlFrame.src = url;
-    });
-
-    refreshButton.addEventListener('click', () => {
-        urlFrame.src = urlFrame.src;
-    });
-});
-
-// 隐藏iframe并加载新页面
-document.getElementById('load-button').addEventListener('click', function() {
-    const iframe = document.getElementById('url-frame');
-    iframe.style.visibility = 'hidden';  // 加载新页面时再次隐藏
-    iframe.src = document.getElementById('url-input').value;
-});
-
-// 在原有加载按钮事件处理中增加：
-document.getElementById('load-button').addEventListener('click', function() {
-    const iframe = document.getElementById('url-frame');
     const progress = document.getElementById('loading-progress');
     const errorDiv = document.getElementById('error-code');
-    
-    // 重置状态
-    errorDiv.style.display = 'none';
-    progress.style.display = 'block';
-    iframe.style.visibility = 'hidden';
-    progress.value = 30; // 模拟初始进度
-    
-    // 设置超时检测
-    let timeout = setTimeout(() => {
-        errorDiv.textContent = 'ERR_CONNECTION_TIMEOUT (代码: 504)';
-        errorDiv.style.display = 'block';
-        progress.style.display = 'none';
-    }, 10000);
 
-    iframe.onload = function() {
-        clearTimeout(timeout);
-        progress.value = 100;
-        setTimeout(() => progress.style.display = 'none', 300);
-        iframe.style.visibility = 'visible';
-    };
+    // 开始按钮功能
+    loadButton.addEventListener('click', () => {
+        errorDiv.style.display = 'none';
+        progress.style.display = 'block';
+        urlFrame.style.visibility = 'hidden';
+        progress.value = 30;
 
-    iframe.onerror = function() {
-        clearTimeout(timeout);
-        errorDiv.textContent = 'ERR_CONNECTION_REFUSED (代码: 403)';
-        errorDiv.style.display = 'block';
-        progress.style.display = 'none';
-    };
-    
-    iframe.src = document.getElementById('url-input').value;
+        let timeout = setTimeout(() => {
+            errorDiv.textContent = 'ERR_CONNECTION_TIMEOUT (代码: 504)';
+            errorDiv.style.display = 'block';
+            progress.style.display = 'none';
+        }, 10000);
+
+        urlFrame.onload = function() {
+            clearTimeout(timeout);
+            progress.value = 100;
+            setTimeout(() => progress.style.display = 'none', 300);
+            urlFrame.style.visibility = 'visible';
+        };
+
+        urlFrame.onerror = function() {
+            clearTimeout(timeout);
+            errorDiv.textContent = 'ERR_CONNECTION_REFUSED (代码: 403)';
+            errorDiv.style.display = 'block';
+            progress.style.display = 'none';
+        };
+        
+        urlFrame.src = 'https://jihao-cn.github.io/EmbedShare/';
+    });
+
+    // 后撤步功能 (直接重新加载)
+    backButton.addEventListener('click', function() {
+        urlFrame.src = 'https://jihao-cn.github.io/EmbedShare/';
+    });
 });
