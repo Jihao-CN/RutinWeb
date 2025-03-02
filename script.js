@@ -7,8 +7,9 @@ let rotation = 0;
 
 audio.volume = 0.5;
 
-// 新增动画函数
 function cloneAndAnimate(event, index) {
+    selectMenuItem(index); // 立即切换内容
+    
     const btn = event.target;
     const clone = btn.cloneNode(true);
     
@@ -30,13 +31,10 @@ function cloneAndAnimate(event, index) {
     }, 10);
 
     setTimeout(() => {
-        clone.remove();
-        selectMenuItem(index);
-        document.getElementById('option-sound').play();
+        clone.remove(); // 仅清理克隆元素
     }, 800);
 }
 
-// 原菜单切换函数
 function selectMenuItem(index) {
     if (selectedMenuItem!== -1) {
         document.querySelectorAll('.menu-item')[selectedMenuItem].classList.remove('selected');
@@ -51,14 +49,13 @@ function selectMenuItem(index) {
     }
 }
 
-// 音频控制相关函数
 function togglePlayPause() {
     if (audio.paused) {
         audio.play();
         audioControl.classList.add('playing');
         audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放光遇联动音乐');
+        showPlaybackStatus('正在播放光遇欧若拉联动音乐');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
@@ -80,7 +77,6 @@ function showPlaybackStatus(message) {
     }, 2000);
 }
 
-// 页面加载相关逻辑
 document.addEventListener("DOMContentLoaded", function () {
     const loadButton = document.getElementById('load-button');
     const backButton = document.getElementById('back-button');
