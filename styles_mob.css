@@ -1,0 +1,159 @@
+@font-face {
+    font-family: 'MiSans';
+    src: url('misans.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'MiSans', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: background-color 2s ease;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: #333;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    position: relative;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-item {
+    background-color: #ccc;       /* 灰色背景 */
+    color: #000;                 /* 黑色文字 */
+    padding: 10px 10px;          /* 竖排文字的特殊内边距（上下15px，左右30px） */
+    font-size: 15px;             /* 适合移动端阅读的字体大小 */
+    border-radius: 5px;         /* 圆角按钮效果 */
+    margin: 0;              /* 按钮左右间距 */
+    cursor: pointer;             /* 鼠标悬停手型指针 */
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* 过渡效果 */
+    writing-mode: vertical-rl;   /* 中文竖排文字（从右向左排列） */
+    text-align: center;          /* 文字垂直居中 */
+}
+
+.menu-item:hover {
+    background-color: #bbb;
+}
+
+.menu-item.selected {
+    transform: translateY(20px);
+    background-color: #fff;
+    color: #000;
+    font-weight: bold;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.content-item {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.content-item.active {
+    display: block;
+}
+
+#background-image {
+    width: 100%;
+    height: 45%;
+    background: url('https://s2.loli.net/2025/03/02/Ct2WlFZGuwDzgLh.jpg') no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: -100vh;
+    animation: slideIn 3s forwards, blurImage 3s 3s forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes blurImage {
+    0% {
+        filter: blur(0);
+    }
+    100% {
+        filter: blur(8px);
+    }
+}
+
+#title {
+    position: absolute;
+    top: -100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    color: #000;
+    animation: titleSlideIn 3s 6s forwards;
+}
+
+@keyframes titleSlideIn {
+    0% {
+        top: -100vh;
+    }
+    100% {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+#links {
+    position: absolute;
+    bottom: -100vh;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    animation: linksSlideIn 3s 6s forwards;
+}
+
+#links a {
+    color: #000;
+    text-decoration: none;
+    margin: 5px 0;
+}
+
+@keyframes linksSlideIn {
+    0% {
+        bottom: -100vh;
+    }
+    100% {
+        bottom: 20px;
+    }
+}
+
+.inner-circle {
+    width: 15px;
+    height: 15px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+.playback-status {
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
