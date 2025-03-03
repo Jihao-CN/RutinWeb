@@ -110,7 +110,7 @@ body {
     transform: translateX(-50%);
     font-size: 48px;
     color: #000;
-    animation: titleSlideIn 3s 6s forwards;
+    animation: titleSlideIn 3s 3s forwards;
 }
 
 @keyframes titleSlideIn {
@@ -125,7 +125,7 @@ body {
     right: 20px;
     display: flex;
     flex-direction: column;
-    animation: linksSlideIn 3s 6s forwards;
+    animation: linksSlideIn 3s 3s forwards;
 }
 
 @keyframes linksSlideIn {
