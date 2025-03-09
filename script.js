@@ -55,7 +55,7 @@ function togglePlayPause() {
         audioControl.classList.add('playing');
         audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放光遇欧若拉联动音乐');
+        showPlaybackStatus('正在播放棉眼乔');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
