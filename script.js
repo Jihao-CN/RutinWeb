@@ -55,7 +55,7 @@ function togglePlayPause() {
         audioControl.classList.add('playing');
         audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放棉眼乔');
+        showPlaybackStatus('正在播放星露谷物语-春季');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
