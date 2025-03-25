@@ -38,6 +38,13 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, padding-left 0.3s ease;
 }
 
+.menu-item-clone {
+    position: fixed;
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 999;
+}
+
 .menu-item:hover {
     background-color: #bbb;
 }

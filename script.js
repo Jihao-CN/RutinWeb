@@ -55,7 +55,7 @@ function togglePlayPause() {
         audioControl.classList.add('playing');
         audioControl.classList.remove('paused');
         audioControl.style.animationPlayState = 'running';
-        showPlaybackStatus('正在播放星露谷物语-春季');
+        showPlaybackStatus('正在播放星露谷物语-姜岛');
     } else {
         audio.pause();
         audioControl.classList.remove('playing');
@@ -76,44 +76,3 @@ function showPlaybackStatus(message) {
         playbackStatus.classList.remove('show');
     }, 2000);
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    const loadButton = document.getElementById('load-button');
-    const backButton = document.getElementById('back-button');
-    const urlFrame = document.getElementById('url-frame');
-    const progress = document.getElementById('loading-progress');
-    const errorDiv = document.getElementById('error-code');
-
-    loadButton.addEventListener('click', () => {
-        errorDiv.style.display = 'none';
-        progress.style.display = 'block';
-        urlFrame.style.visibility = 'hidden';
-        progress.value = 30;
-
-        let timeout = setTimeout(() => {
-            errorDiv.textContent = 'ERR_CONNECTION_TIMEOUT (代码: 504)';
-            errorDiv.style.display = 'block';
-            progress.style.display = 'none';
-        }, 10000);
-
-        urlFrame.onload = function() {
-            clearTimeout(timeout);
-            progress.value = 100;
-            setTimeout(() => progress.style.display = 'none', 300);
-            urlFrame.style.visibility = 'visible';
-        };
-
-        urlFrame.onerror = function() {
-            clearTimeout(timeout);
-            errorDiv.textContent = 'ERR_CONNECTION_REFUSED (代码: 403)';
-            errorDiv.style.display = 'block';
-            progress.style.display = 'none';
-        };
-        
-        urlFrame.src = 'https://jihao-cn.github.io/EmbedShare/';
-    });
-
-    backButton.addEventListener('click', function() {
-        urlFrame.src = 'https://jihao-cn.github.io/EmbedShare/';
-    });
-});
