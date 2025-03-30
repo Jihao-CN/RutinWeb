@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'MiSans';
-    src: url('misans.woff2') format('woff2');
+    font-family: 'KNMaiyuan';
+    src: url('KNMaiyuan.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    font-family: 'MiSans', Arial, sans-serif;
+    font-family: 'KNMaiyuan', Arial, sans-serif;
     display: flex;
     height: 100vh;
     margin: 0;
