@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小工具</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 2rem;
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+        }
+
+        .tools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            perspective: 1000px; /* 关键1：设置3D透视 */
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform-style: preserve-3d; /* 关键2：保持3D变换 */
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* 关键3：悬停时的3D倾斜效果 */
+        .tool-card:hover {
+            transform: 
+                perspective(1000px) 
+                rotateX(5deg) 
+                rotateY(10deg) 
+                translateZ(15px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #222;
+        }
+
+        .tool-description {
+            font-size: 0.95rem;
+            color: #555;
+            flex-grow: 1;
+        }
+
+        .tool-link {
+            margin-top: 1rem;
+            color: #4a6baf;
+            font-size: 0.9rem;
+            font-weight: 500;
+            align-self: flex-end;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover .tool-link {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .tools-container {
+                grid-template-columns: 1fr;
+            }
+            .tool-card:hover {
+                transform: 
+                    perspective(1000px) 
+                    rotateX(3deg) 
+                    rotateY(5deg) 
+                    translateZ(10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tools-container"></div>
+
+    <script>
+        const toolData = [
+            {
+                title: "数字转换器",
+                description: "阿拉伯数字与罗马数字相互转换",
+                url: "numconvert.html"
+            },
+            {
+                title: "颜色选择器",
+                description: "RGB/HEX颜色代码转换",
+                url: "colorpicker.html"
+            },
+            {
+                title: "扫雷",
+                description: "简单版，10*10方格10个雷",
+                url: "minesweeper.html"
+            },
+            {
+                title: "称号生成器",
+                description: "奇葩搞笑的称号，230个",
+                url: "titlegenerator.html"
+            },
+            {
+                title: "二维码生成",
+                description: "文本转二维码图片",
+                url: "#"
+            },
+            {
+                title: "密码生成器",
+                description: "生成高强度随机密码",
+                url: "#"
+            }
+        ];
+        
+        const container = document.querySelector('.tools-container');
+        
+        toolData.forEach(item => {
+            const card = document.createElement('a');
+            card.className = 'tool-card';
+            card.href = item.url;
+
+            card.innerHTML = `
+                <div class="tool-title">${item.title}</div>
+                <div class="tool-description">${item.description}</div>
+                <div class="tool-link">点击使用 →</div>
+            `;
+
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>

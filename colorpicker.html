@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material 颜色选择器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #5F6368;
+            --light-gray: #F1F3F4;
+            --medium-gray: #DADCE0;
+            --dark-gray: #3C4043;
+            --error-color: #EA4335;
+        }
+
+        body {
+            font-family: 'Google Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: var(--dark-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 32px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .color-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            margin: 0 auto 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .color-preview:hover {
+            transform: scale(1.05);
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 48px;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border 0.2s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .rgb-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .rgb-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .rgb-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .color-preview {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Material 颜色选择器</h1>
+        
+        <div class="color-preview" id="colorDisplay"></div>
+        
+        <input type="color" id="colorPicker" value="#4285F4">
+        
+        <div class="input-group">
+            <label for="hexInput">十六进制颜色码</label>
+            <input type="text" id="hexInput" class="text-input" placeholder="例如: 4285F4">
+        </div>
+        
+        <div class="input-group">
+            <label>RGB 值</label>
+            <div class="rgb-inputs">
+                <div>
+                    <input type="number" id="redInput" min="0" max="255" class="rgb-input" placeholder="R">
+                </div>
+                <div>
+                    <input type="number" id="greenInput" min="0" max="255" class="rgb-input" placeholder="G">
+                </div>
+                <div>
+                    <input type="number" id="blueInput" min="0" max="255" class="rgb-input" placeholder="B">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        2025 Material 颜色选择器 | Google风格设计
+    </div>
+
+    <script>
+        const colorPicker = document.getElementById('colorPicker');
+        const hexInput = document.getElementById('hexInput');
+        const redInput = document.getElementById('redInput');
+        const greenInput = document.getElementById('greenInput');
+        const blueInput = document.getElementById('blueInput');
+        const colorDisplay = document.getElementById('colorDisplay');
+
+        // 初始化颜色显示
+        function updateColorDisplay(color) {
+            colorDisplay.style.backgroundColor = color;
+        }
+
+        // 颜色选择器改变时更新输入框和显示区域
+        colorPicker.addEventListener('input', function () {
+            const selectedColor = this.value;
+            hexInput.value = selectedColor.slice(1).toUpperCase();
+
+            const r = parseInt(selectedColor.slice(1, 3), 16);
+            const g = parseInt(selectedColor.slice(3, 5), 16);
+            const b = parseInt(selectedColor.slice(5, 7), 16);
+
+            redInput.value = r;
+            greenInput.value = g;
+            blueInput.value = b;
+
+            updateColorDisplay(selectedColor);
+        });
+
+        // 十六进制输入框改变时更新颜色选择器和显示区域
+        hexInput.addEventListener('input', function () {
+            const inputHex = this.value.trim().toUpperCase();
+            if (/^([A-F0-9]{3}|[A-F0-9]{6})$/.test(inputHex)) {
+                const fullHex = inputHex.length === 3 
+                    ? inputHex.split('').map(c => c + c).join('')
+                    : inputHex;
+                const hex = `#${fullHex}`;
+                colorPicker.value = hex;
+                const r = parseInt(fullHex.slice(0, 2), 16);
+                const g = parseInt(fullHex.slice(2, 4), 16);
+                const b = parseInt(fullHex.slice(4, 6), 16);
+                redInput.value = r;
+                greenInput.value = g;
+                blueInput.value = b;
+                updateColorDisplay(hex);
+            }
+        });
+
+        // RGB 输入框改变时更新颜色选择器和显示区域
+        function updateFromRGB() {
+            const r = Math.min(255, Math.max(0, parseInt(redInput.value) || 0));
+            const g = Math.min(255, Math.max(0, parseInt(greenInput.value) || 0));
+            const b = Math.min(255, Math.max(0, parseInt(blueInput.value) || 0));
+
+            redInput.value = r;
+            greenInput.value = g;
+            blueInput.value = b;
+
+            const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`.toUpperCase();
+            colorPicker.value = hex;
+            hexInput.value = hex.slice(1);
+            updateColorDisplay(hex);
+        }
+
+        redInput.addEventListener('input', updateFromRGB);
+        greenInput.addEventListener('input', updateFromRGB);
+        blueInput.addEventListener('input', updateFromRGB);
+
+        // 初始化显示
+        colorPicker.dispatchEvent(new Event('input'));
+    </script>
+</body>
+
+</html>

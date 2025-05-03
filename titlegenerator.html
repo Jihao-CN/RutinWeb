@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>称号生成器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #5F6368;
+            --light-gray: #F1F3F4;
+            --medium-gray: #DADCE0;
+            --dark-gray: #3C4043;
+        }
+
+        body {
+            font-family: 'Google Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: var(--dark-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .app-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-bottom: 24px;
+        }
+
+        #generated-title {
+            font-size: 20px;
+            color: var(--secondary-color);
+            margin: 24px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            border-radius: 4px;
+            background-color: var(--light-gray);
+            line-height: 1.4;
+        }
+
+        .generate-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px 0 rgba(66, 133, 244, 0.3), 0 1px 3px 1px rgba(66, 133, 244, 0.15);
+        }
+
+        .generate-button:hover {
+            background-color: #3367D6;
+            box-shadow: 0 1px 2px 0 rgba(66, 133, 244, 0.3), 0 2px 6px 2px rgba(66, 133, 244, 0.15);
+        }
+
+        .generate-button:active {
+            background-color: #2B56B3;
+        }
+
+        .material-icons {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .footer {
+            padding: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--secondary-color);
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        @media (max-width: 600px) {
+            .title-container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            #generated-title {
+                font-size: 18px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="app-name">称号生成器</div>
+    </div>
+
+    <div class="main-content">
+        <div class="title-container">
+            <h1>称号生成器</h1>
+            <p id="generated-title">点击下方按钮生成你的专属称号</p>
+            <button id="generate-button" class="generate-button">
+                <span class="material-icons">auto_awesome</span>
+                生成称号
+            </button>
+        </div>
+    </div>
+
+    <div class="footer">
+        2025 Material 称号生成器 | Google风格设计
+    </div>
+
+    <script>
+        const titles = [
+            "宇宙首席奶茶品尝师",
+            "xxxx年度马桶哲学家",
+            "银河系泡泡糖吹破记录保持者",
+            "xxxx年发呆锦标赛冠军",
+            "国家级沙发马铃薯认证师",
+            "xxxx年度国际泡面鉴赏大使",
+            "国家级午睡拖延症研究专员",
+            "银河系手机电量焦虑症特级顾问",
+            "亚太区电梯尬聊行为观察员",
+            "宇宙级外卖选择困难症诊疗师",
+            "xxxx年地铁坐过站行为分析专家",
+            "全球洗手间哲学思考大赛金奖得主",
+            "星际忘带钥匙应急方案制定专家",
+            "国家级深夜吃播行为艺术大师",
+            "xxxx年度支付宝能量偷取冠军",
+            "人类高质量发呆锦标赛卫冕者",
+            "国际级错别字自动纠察系统",
+            "亚太区闹钟屏蔽技术研发先锋",
+            "宇宙短视频无限循环记录保持者",
+            "xxxx年度走路撞门框研究学者",
+            "全球泡脚水温度控制特级技师",
+            "星际洗衣机衣物遗忘症候群专家",
+            "国家级错峰上厕所战略顾问",
+            "银河系表情包误发拯救大使",
+            "xxxx年电梯镜子自拍锦标赛冠军",
+            "国际级自动回复终结者认证师",
+            "人类社恐式打招呼行为艺术家",
+            "全球泡面调料包收藏协会主席",
+            "xxxx年度消息已读不回研究专员",
+            "星际台阶踩空事故预防顾问",
+            "国家级超市闲逛路径规划大师",
+            "宇宙级手机人脸识别失败专家",
+            "亚太区奶茶成分分析实验室主任",
+            "全球早起失败补偿性睡眠顾问",
+            "xxxx年度洗澡忘拿毛巾应急专家",
+            "xxxx年量子泡面冲泡观测员",
+            "平行宇宙拖鞋配对研究所首席",
+            "时光机错过公交事件记录官",
+            "反物质外卖凉了重热工程师",
+            "四维空间钥匙遗忘症顾问",
+            "黑洞级WiFi信号追逐专家",
+            "超弦理论洗澡忘关水学者",
+            "元宇宙电梯尴尬氛围调节师",
+            "暗物质被窝熬夜锦标赛冠军",
+            "xxxx年度虫洞级错屏发送专员",
+            "曲率驱动泡脚水凉了先知",
+            "二向箔级手机碎屏预言家",
+            "混沌理论袜子消失调查员",
+            "克莱因瓶式迷路行为专家",
+            "薛定谔的厕所纸存量顾问"
+        ];
+
+        const generateButton = document.getElementById('generate-button');
+        const generatedTitle = document.getElementById('generated-title');
+
+        generateButton.addEventListener('click', function () {
+            // 添加点击动画
+            generateButton.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                generateButton.style.transform = 'scale(1)';
+            }, 100);
+            
+            // 随机选择称号
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            const randomTitle = titles[randomIndex];
+            
+            // 添加淡出淡入动画
+            generatedTitle.style.opacity = '0';
+            setTimeout(() => {
+                generatedTitle.textContent = randomTitle;
+                generatedTitle.style.opacity = '1';
+            }, 200);
+        });
+    </script>
+</body>
+
+</html>

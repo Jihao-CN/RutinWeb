@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字转换器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --primary-hover: #1765cc;
+            --error: #d93025;
+            --border: #dadce0;
+            --radius: 8px;
+        }
+        
+        body {
+            background: #f8f9fa;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Google Sans', Roboto, sans-serif;
+        }
+        
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            box-shadow: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px rgba(60,64,67,0.15);
+            width: min(90%, 400px);
+            transition: all 0.3s;
+        }
+        
+        h1 {
+            color: #202124;
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+            margin: 0 0 32px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .input-field:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(26,115,232,0.2);
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        
+        .btn:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        #error {
+            color: var(--error);
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            min-height: 16px;
+        }
+        
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>数字转换器</h1>
+        
+        <div class="input-group">
+            <input type="radio" name="type" checked id="arabicRadio">
+            <input type="number" id="arabic" placeholder="输入阿拉伯数字" class="input-field">
+        </div>
+        
+        <div class="input-group">
+            <input type="radio" name="type" id="romanRadio">
+            <input type="text" id="roman" placeholder="输入罗马数字" class="input-field">
+        </div>
+        
+        <button onclick="convert()" class="btn">转换</button>
+        <div id="error"></div>
+    </div>
+
+    <script>
+    // 优化后的转换逻辑
+    const Roman = {
+        map: [
+            [1000,'M'], [900,'CM'], [500,'D'], [400,'CD'],
+            [100,'C'], [90,'XC'], [50,'L'], [40,'XL'],
+            [10,'X'], [9,'IX'], [5,'V'], [4,'IV'], [1,'I']
+        ],
+        
+        toRoman(num) {
+            return this.map.reduce((res, [val, sym]) => {
+                while(num >= val) res += sym, num -= val;
+                return res;
+            }, '');
+        },
+        
+        toArabic(str) {
+            const dict = {I:1, V:5, X:10, L:50, C:100, D:500, M:1000};
+            return [...str.toUpperCase()].reduce((sum, char, i, arr) => {
+                dict[char] < dict[arr[i+1]] ? sum -= dict[char] : sum += dict[char];
+                return sum;
+            }, 0);
+        },
+        
+        isValid(str) {
+            return /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/.test(str);
+        }
+    };
+
+    function convert() {
+        const [arabic, roman, error] = ['arabic', 'roman', 'error'].map(id => document.getElementById(id));
+        const isArabic = document.getElementById('arabicRadio').checked;
+        
+        if(isArabic) {
+            const num = +arabic.value;
+            if(num >= 1 && num <= 3999) {
+                roman.value = Roman.toRoman(num);
+                error.textContent = '';
+            } else {
+                error.textContent = '请输入1-3999之间的数字';
+                roman.value = '';
+            }
+        } else {
+            const str = roman.value.trim().toUpperCase();
+            if(Roman.isValid(str)) {
+                arabic.value = Roman.toArabic(str);
+                error.textContent = '';
+            } else {
+                error.textContent = '无效罗马数字';
+                arabic.value = '';
+            }
+        }
+    }
+    </script>
+</body>
+</html>

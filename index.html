@@ -9,7 +9,7 @@
 <body>
     <div class="menu">
         <button class="menu-item" onclick="cloneAndAnimate(event, 0)">首页</button>
-        <button class="menu-item" onclick="cloneAndAnimate(event, 1)">快捷方式</button>
+        <button class="menu-item" onclick="cloneAndAnimate(event, 1)">小工具</button>
         <button class="menu-item" onclick="cloneAndAnimate(event, 2)"></button>
         <div class="audio-control-container">
             <div class="audio-control" id="audio-control" onclick="togglePlayPause()">
@@ -23,36 +23,23 @@
         </div>
     </div>
     <div class="content">
-        <div id="home-content" class="content-item">
-            <div id="background-image"></div>
-            <div id="title">RutinWeb</div>
-            <div id="links" class="vertical-links">
-                <a href="https://www.douyin.com/user/MS4wLjABAAAAMJpY5mMiLjYGaGHPdivdiah9x1uQBWcCjDJZWIJpasuGOxG5cLwWt-NLxYZp9Vk7">鸡好的抖音</a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAAutMPf8yXOSc-uReBIlsrULa54tuSD-oP4o7xzGVUt85n13yyJZeeMzpcArrg_nf2">依一的抖音</a>
-                <a href="https://www.douyin.com/user/MS4wLjABAAAAW3Vt57eOYxu7yB5c7WkSbdBVE8NbmWmZQH0EhbZ6bwsud3uHAgltwnWAvNqY7ajs">青木的抖音</a>
-                <a href="https://space.bilibili.com/2121656213">哔哩哔哩</a>
-                <a href="https://github.com/Jihao-CN">GitHub</a>
-            </div>
-        </div>
+        <div id="home-content" class="content-item"></div>
         <div id="content-1" class="content-item">
-            <div class="security-notice">
-                <div>
-                    <h1>重要通知</h1>
-                    <p>由于安全问题，本功能已停用。</p>
-                    <p>恶意代码满天飞，开发者良心被狗吃。</p>
-                    <p>已安装的用户请立马删除以免造成损失</p>
-                    <p>安全？现在绝对安全！因为根本啥也干不了！</p>
-                    <p>黑客看了摇头，杀毒软件看了沉默。</p>    
-                    <p>再也不用半夜接用户投诉「电脑被你脚本搞炸了」</p> 
-                    <p>————————————金句来自DeepSeek AI</p>
+            <div class="tools-container" id="tools-container"></div>
+            <div id="iframe-container" class="iframe-container">
+                <div class="iframe-header">
+                    <button id="back-button" class="back-button">← 返回</button>
+                    <span id="iframe-title" class="iframe-title"></span>
+                    <span id="security-badge" class="security-badge" title="此工具在安全沙箱中运行">🔒</span>
                 </div>
-        </div>
-        <div id="content-2" class="content-item">
-            
+                <div id="iframe-wrapper" class="iframe-wrapper">
+                    <iframe id="tool-iframe" sandbox="allow-scripts allow-same-origin" class="tool-iframe"></iframe>
+                </div>
             </div>
         </div>
+        <div id="content-2" class="content-item"></div>
     </div>
-    <audio id="bgm" src="https://api.injahow.cn/meting/?type=url&id=1369034061"></audio>
+    <audio id="bgm" src="https://api.injahow.cn/meting/?type=url&id=2619968667"></audio>
     <audio id="option-sound" src="s.wav"></audio>
     <script src="script.js"></script>
 </body>

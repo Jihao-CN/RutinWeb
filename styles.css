@@ -1,3 +1,4 @@
+/* 基础样式 */
 @font-face {
     font-family: 'KNMaiyuan';
     src: url('KNMaiyuan.ttf') format('truetype');
@@ -59,16 +60,6 @@ body {
     font-weight: bold;
 }
 
-.menu-item.selected::after {
-    content: '▶';
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #000;
-}
-
 /* 内容区域 */
 .content {
     flex-grow: 1;
@@ -87,59 +78,8 @@ body {
 }
 
 .content-item.active {
-    display: block;
-}
-
-/* 背景图片动画 */
-#background-image {
-    width: 100%;
-    height: 100%;
-    background: url('https://bing.biturl.top/?format=image') no-repeat center center;
-    background-size: cover;
-    position: absolute;
-    top: -100vh;
-    animation: slideIn 3s forwards, blurImage 3s 3s forwards;
-}
-
-@keyframes slideIn {
-    0% { top: -100vh; }
-    100% { top: 0; }
-}
-
-@keyframes blurImage {
-    0% { filter: blur(0); }
-    100% { filter: blur(8px); }
-}
-
-/* 标题动画 */
-#title {
-    position: absolute;
-    top: -100vh;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 48px;
-    color: #000;
-    animation: titleSlideIn 3s 3s forwards;
-}
-
-@keyframes titleSlideIn {
-    0% { top: -100vh; }
-    100% { top: 50%; transform: translate(-50%, -50%); }
-}
-
-/* 链接动画 */
-#links {
-    position: absolute;
-    bottom: -100vh;
-    right: 20px;
     display: flex;
     flex-direction: column;
-    animation: linksSlideIn 3s 3s forwards;
-}
-
-@keyframes linksSlideIn {
-    0% { bottom: -100vh; }
-    100% { bottom: 20px; }
 }
 
 /* 音频控制 */
@@ -220,67 +160,142 @@ body {
     overflow: hidden;
 }
 
-/* 其他组件 */
-.file-list-item {
+/* 工具列表样式 */
+.tools-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    perspective: 1000px;
+    padding: 2rem;
+    width: 100%;
+}
+
+.tool-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform-style: preserve-3d;
+    border: 1px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.tool-card:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(10deg) translateZ(15px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.tool-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    color: #222;
+}
+
+.tool-description {
+    font-size: 0.95rem;
+    color: #555;
+    flex-grow: 1;
+}
+
+.tool-link {
+    margin-top: 1rem;
+    color: #4a6baf;
+    font-size: 0.9rem;
+    font-weight: 500;
+    align-self: flex-end;
+    transition: transform 0.3s ease;
+}
+
+.tool-card:hover .tool-link {
+    transform: translateX(5px);
+}
+
+/* iframe 相关样式 */
+.iframe-container {
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+}
+
+.iframe-container.active {
+    display: flex;
+}
+
+.iframe-header {
     display: flex;
     align-items: center;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
 }
 
-.file-list-item img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+.back-button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #4285f4;
 }
 
+.back-button:hover {
+    background-color: #e8f0fe;
+    border-radius: 4px;
+}
+
+.iframe-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.security-badge {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #5f6368;
+    cursor: help;
+    transition: all 0.3s ease;
+}
+
+.security-badge:hover {
+    color: #4285f4;
+    transform: scale(1.2);
+}
+
+.iframe-wrapper {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: white;
+}
+
+/* 动画 */
 @keyframes rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-.vertical-links a,
-.version-switch a {
-    display: block;
-    margin-bottom: 10px;
-}
-
-/* 输入组 */
-.input-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-#url-input {
-    flex: 1;
-    padding: 8px;
-    max-width: 150px;
-    max-height: 6px;
-    transition: width 0.3s ease;
-}
-
-/* 新增按钮动画效果 */
-.menu-item-clone {
-    position: fixed;
-    pointer-events: none;
-    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    z-index: 999;
-}
-
-.security-notice {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    font-size: 24px;
-    color: #d9534f; 
-    background-color: #f9f9f9;
-    padding: 20px;
-    box-sizing: border-box;
-}
-.security-notice h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .tools-container {
+        grid-template-columns: 1fr;
+    }
+    .tool-card:hover {
+        transform: perspective(1000px) rotateX(3deg) rotateY(5deg) translateZ(10px);
+    }
 }

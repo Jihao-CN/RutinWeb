@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫雷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #5F6368;
+            --light-gray: #F1F3F4;
+            --medium-gray: #DADCE0;
+            --dark-gray: #3C4043;
+            --error-color: #EA4335;
+            --success-color: #34A853;
+        }
+
+        body {
+            font-family: 'Google Sans', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: var(--dark-gray);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--dark-gray);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 36px);
+            gap: 2px;
+            margin: 0 auto;
+        }
+
+        .cell {
+            width: 36px;
+            height: 36px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .cell:hover {
+            background-color: #E8F0FE;
+        }
+
+        .revealed {
+            background-color: white;
+            box-shadow: inset 0 0 0 1px var(--medium-gray);
+        }
+
+        .mine {
+            background-color: var(--error-color);
+            color: white;
+        }
+
+        .flagged::after {
+            content: "🚩";
+            font-size: 18px;
+        }
+
+        .count-1 { color: #4285F4; }
+        .count-2 { color: #0F9D58; }
+        .count-3 { color: #EA4335; }
+        .count-4 { color: #673AB7; }
+        .count-5 { color: #FF5722; }
+        .count-6 { color: #009688; }
+        .count-7 { color: #795548; }
+        .count-8 { color: #9E9E9E; }
+
+        .game-status {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .win {
+            background-color: #E6F4EA;
+            color: var(--success-color);
+            display: block;
+        }
+
+        .lose {
+            background-color: #FCE8E6;
+            color: var(--error-color);
+            display: block;
+        }
+
+        .restart-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: block;
+            margin: 16px auto 0;
+            transition: background-color 0.2s;
+        }
+
+        .restart-button:hover {
+            background-color: #3367D6;
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: repeat(10, 30px);
+            }
+            
+            .cell {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>Material 扫雷</h1>
+        
+        <div class="game-info">
+            <div>地雷: <span id="mineCount">10</span></div>
+            <div>标记: <span id="flagCount">0</span></div>
+        </div>
+        
+        <div class="grid" id="grid"></div>
+        
+        <div class="game-status" id="gameStatus"></div>
+        
+        <button class="restart-button" id="restartButton">
+            <i class="material-icons" style="vertical-align: middle; font-size: 18px;">refresh</i>
+            重新开始
+        </button>
+    </div>
+    
+    <div class="footer">
+        2025 Material 扫雷 | Google风格设计
+    </div>
+
+    <script>
+        const GRID_SIZE = 10;
+        const MINE_COUNT = 10;
+        let gameOver = false;
+        let flaggedCount = 0;
+        
+        // 创建游戏网格
+        function createGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            document.getElementById('gameStatus').className = 'game-status';
+            gameOver = false;
+            flaggedCount = 0;
+            updateFlagCount();
+            
+            // 初始化雷区
+            const mines = Array(GRID_SIZE * GRID_SIZE).fill(false);
+            for (let i = 0; i < MINE_COUNT; ) {
+                const index = Math.floor(Math.random() * GRID_SIZE * GRID_SIZE);
+                if (!mines[index]) {
+                    mines[index] = true;
+                    i++;
+                }
+            }
+
+            // 计算每个单元格周围的地雷数量
+            const counts = Array(GRID_SIZE * GRID_SIZE).fill(0);
+            for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+                if (mines[i]) continue;
+                
+                const x = i % GRID_SIZE;
+                const y = Math.floor(i / GRID_SIZE);
+                
+                for (let dx = -1; dx <= 1; dx++) {
+                    for (let dy = -1; dy <= 1; dy++) {
+                        const nx = x + dx;
+                        const ny = y + dy;
+                        if (nx >= 0 && nx < GRID_SIZE && ny >= 0 && ny < GRID_SIZE) {
+                            const ni = ny * GRID_SIZE + nx;
+                            if (mines[ni]) counts[i]++;
+                        }
+                    }
+                }
+            }
+
+            // 创建单元格
+            for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.dataset.index = i;
+                cell.dataset.mine = mines[i];
+                cell.dataset.count = counts[i];
+                cell.dataset.revealed = 'false';
+                cell.dataset.flagged = 'false';
+
+                cell.addEventListener('click', handleClick);
+                cell.addEventListener('contextmenu', handleRightClick);
+
+                grid.appendChild(cell);
+            }
+        }
+
+        // 更新标记数量显示
+        function updateFlagCount() {
+            document.getElementById('flagCount').textContent = flaggedCount;
+            document.getElementById('mineCount').textContent = MINE_COUNT - flaggedCount;
+        }
+
+        // 处理左键点击
+        function handleClick(event) {
+            if (gameOver) return;
+            
+            const cell = event.target;
+            if (cell.dataset.flagged === 'true') return;
+            
+            if (cell.dataset.mine === 'true') {
+                gameOver = true;
+                revealAllMines();
+                document.getElementById('gameStatus').className = 'game-status lose';
+                document.getElementById('gameStatus').textContent = '游戏结束！你踩到了地雷。';
+                return;
+            }
+
+            revealCell(cell);
+            checkWin();
+        }
+
+        // 处理右键点击
+        function handleRightClick(event) {
+            event.preventDefault();
+            if (gameOver) return;
+            
+            const cell = event.target;
+            if (cell.dataset.revealed === 'true') return;
+            
+            if (cell.dataset.flagged === 'true') {
+                cell.dataset.flagged = 'false';
+                cell.classList.remove('flagged');
+                flaggedCount--;
+            } else {
+                cell.dataset.flagged = 'true';
+                cell.classList.add('flagged');
+                flaggedCount++;
+            }
+            
+            updateFlagCount();
+        }
+
+        // 递归揭开单元格
+        function revealCell(cell) {
+            if (cell.dataset.revealed === 'true') return;
+            
+            cell.dataset.revealed = 'true';
+            cell.classList.add('revealed');
+            
+            if (cell.dataset.count === '0') {
+                const index = parseInt(cell.dataset.index);
+                const x = index % GRID_SIZE;
+                const y = Math.floor(index / GRID_SIZE);
+                
+                for (let dx = -1; dx <= 1; dx++) {
+                    for (let dy = -1; dy <= 1; dy++) {
+                        const nx = x + dx;
+                        const ny = y + dy;
+                        if (nx >= 0 && nx < GRID_SIZE && ny >= 0 && ny < GRID_SIZE) {
+                            const ni = ny * GRID_SIZE + nx;
+                            const neighbor = document.querySelector(`[data-index="${ni}"]`);
+                            if (neighbor.dataset.revealed === 'false') {
+                                revealCell(neighbor);
+                            }
+                        }
+                    }
+                }
+            } else {
+                cell.textContent = cell.dataset.count;
+                cell.classList.add(`count-${cell.dataset.count}`);
+            }
+        }
+
+        // 显示所有地雷
+        function revealAllMines() {
+            document.querySelectorAll('[data-mine="true"]').forEach(cell => {
+                cell.classList.add('mine');
+                cell.textContent = '💣';
+            });
+        }
+
+        // 检查是否胜利
+        function checkWin() {
+            const unrevealedSafe = document.querySelectorAll('[data-mine="false"][data-revealed="false"]');
+            if (unrevealedSafe.length === 0) {
+                gameOver = true;
+                document.getElementById('gameStatus').className = 'game-status win';
+                document.getElementById('gameStatus').textContent = '恭喜，你赢了！';
+                revealAllMines();
+            }
+        }
+
+        // 重新开始游戏
+        document.getElementById('restartButton').addEventListener('click', createGrid);
+
+        // 初始化游戏
+        createGrid();
+    </script>
+</body>
+
+</html>

@@ -1,9 +1,9 @@
+// 音乐播放器相关功能
 let selectedMenuItem = -1;
 const audio = document.getElementById('bgm');
 const audioControl = document.getElementById('audio-control');
 const playbackStatus = document.getElementById('playback-status');
 const optionSound = document.getElementById('option-sound');
-let rotation = 0;
 let lyricsData = [];
 let lastLyric = "";
 let hideTimeout = null;
@@ -13,7 +13,7 @@ audio.volume = 0.5;
 // 获取歌词数据
 async function fetchLyrics() {
     try {
-        const response = await fetch('https://apis.netstart.cn/music//lyric?id=1369034061');
+        const response = await fetch('https://apis.netstart.cn/music//lyric?id=2619968667');
         const data = await response.json();
         parseLyrics(data.lrc.lyric);
     } catch (error) {
@@ -68,7 +68,7 @@ function updateLyrics() {
     }
 }
 
-// 显示播放状态和歌词（每次显示2秒）
+// 显示播放状态和歌词
 function showPlaybackStatus(message, lyric = "") {
     const statusText = document.getElementById('status-text');
     const lyricText = document.getElementById('lyric-text');
@@ -76,17 +76,11 @@ function showPlaybackStatus(message, lyric = "") {
     statusText.textContent = message;
     lyricText.textContent = lyric;
     
-    // 清除之前的隐藏计时
     clearTimeout(hideTimeout);
-    
-    // 强制重绘以重新触发动画
     playbackStatus.classList.remove('show');
-    void playbackStatus.offsetWidth; // 触发重绘
-    
-    // 显示新内容
+    void playbackStatus.offsetWidth;
     playbackStatus.classList.add('show');
     
-    // 设置1.5秒后隐藏
     hideTimeout = setTimeout(() => {
         playbackStatus.classList.remove('show');
     }, 2000);
@@ -145,7 +139,6 @@ function togglePlayPause() {
         audioControl.style.animationPlayState = 'running';
         showPlaybackStatus('♪ 正在播放 ♪');
         
-        // 开始播放时获取歌词
         if (lyricsData.length === 0) {
             fetchLyrics();
         }
@@ -155,7 +148,7 @@ function togglePlayPause() {
         audioControl.classList.add('paused');
         audioControl.style.animationPlayState = 'paused';
         showPlaybackStatus('已暂停');
-        lastLyric = ""; // 重置歌词状态
+        lastLyric = "";
     }
 }
 
@@ -164,7 +157,83 @@ function adjustVolume(value) {
     audio.volume = value;
 }
 
-// 页面加载时初始化
+// 小工具相关功能
+const toolData = [
+    {
+        id: "numconvert",
+        title: "数字转换器",
+        description: "阿拉伯数字与罗马数字相互转换",
+        url: "numconvert.html"
+    },
+    {
+        id: "colorpicker",
+        title: "颜色选择器",
+        description: "RGB/HEX颜色代码转换",
+        url: "colorpicker.html"
+    },
+    {
+        id: "minesweeper",
+        title: "扫雷",
+        description: "简单版，10*10方格10个雷",
+        url: "minesweeper.html"
+    },
+    {
+        id: "titlegenerator",
+        title: "称号生成器",
+        description: "奇葩搞笑的称号，230个",
+        url: "titlegenerator.html"
+    }
+];
+
+// 初始化工具列表
+function initTools() {
+    const container = document.getElementById('tools-container');
+    
+    toolData.forEach(tool => {
+        const card = document.createElement('div');
+        card.className = 'tool-card';
+        card.dataset.toolId = tool.id;
+
+        card.innerHTML = `
+            <div class="tool-title">${tool.title}</div>
+            <div class="tool-description">${tool.description}</div>
+            <div class="tool-link">点击使用 →</div>
+        `;
+
+        card.addEventListener('click', () => loadTool(tool));
+        container.appendChild(card);
+    });
+}
+
+// 加载工具到iframe
+function loadTool(tool) {
+    const iframeContainer = document.getElementById('iframe-container');
+    const toolIframe = document.getElementById('tool-iframe');
+    const iframeTitle = document.getElementById('iframe-title');
+    
+    // 更新标题
+    iframeTitle.textContent = tool.title;
+    
+    // 显示iframe容器
+    document.getElementById('tools-container').style.display = 'none';
+    iframeContainer.classList.add('active');
+    
+    // 设置iframe源
+    toolIframe.src = tool.url;
+}
+
+// 返回工具列表
+function backToTools() {
+    document.getElementById('iframe-container').classList.remove('active');
+    document.getElementById('tools-container').style.display = 'grid';
+    document.getElementById('tool-iframe').src = 'about:blank';
+}
+
+// 事件监听
+document.getElementById('back-button').addEventListener('click', backToTools);
+
+// 页面初始化
 document.addEventListener('DOMContentLoaded', () => {
     audio.addEventListener('timeupdate', updateLyrics);
+    initTools();
 });
